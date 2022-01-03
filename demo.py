@@ -8,7 +8,7 @@ uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
     # Can be used wherever a "file-like" object is accepted:
   
-    xl = pd.read_excel(uploaded_file,engine='openpyxl')
+    xl = pd.read_csv(uploaded_file)
     xl.dropna()
     xl.drop(xl.filter(regex="Unnamed"),axis=1, inplace=True)
 
@@ -28,7 +28,7 @@ if uploaded_file is not None:
     st.text(str(len(list(xl.columns)))+' Columns Detected : ' + ', '.join(xl.columns))
 
     tableName = st.text_input('Enter Table Name ', 'TempTableCase#########')
-    st.write('Table Name :- ', tableName)
+    #st.write('Table Name :- ', tableName)
 
     op1 = '/*  CREATE TABLE  */\nCREATE TABLE ' + tableName + '('
 
