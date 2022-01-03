@@ -39,7 +39,7 @@ if uploaded_file is not None:
 
     output = st.text_area('Create Table Code : '
         ,op1+op2[:-2] + '\n);'
-        ,height=len(xl.columns) + 2 ,help = 'Code to Create Table')
+        ,height=len(xl.columns) + 2 )
     
 
     if oneGO:
