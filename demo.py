@@ -67,5 +67,4 @@ if uploaded_file is not None:
 
         output2 = st.text_area('Insert Data Code : '
             ,ins
-            ,height=len(xl.columns) + 2
-            ,help = 'Code to insert into Table')
+            ,height=len(xl.columns) + 2)
