@@ -2,7 +2,7 @@ from numpy import insert
 import streamlit as st
 import pandas as pd
 
-st.title('Convert Excel -> SQL')
+st.title('Convert CSV -> SQL')
 
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
@@ -13,9 +13,9 @@ if uploaded_file is not None:
     xl.drop(xl.filter(regex="Unnamed"),axis=1, inplace=True)
 
 
-    viewExcel = st.checkbox('Show Excel File')
+    viewCSV = st.checkbox('Show CSV File')
 
-    if viewExcel:
+    if viewCSV:
         st.write(xl)
 
 
