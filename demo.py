@@ -51,8 +51,7 @@ if uploaded_file is not None:
 
         output = st.text_area('Insert all rows in one GO : '
             ,op3+op4+');'
-            ,height=len(xl.columns) + 2
-            ,help = 'Code to Insert into Table')
+            ,height=len(xl.columns) + 2)
 
 
     else:
