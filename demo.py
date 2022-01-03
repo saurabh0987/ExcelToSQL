@@ -1,6 +1,5 @@
 from numpy import insert
 import streamlit as st
-import xlrd
 import pandas as pd
 
 st.title('Convert Excel -> SQL')
@@ -9,7 +8,7 @@ uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
     # Can be used wherever a "file-like" object is accepted:
   
-    xl = pd.read_excel(uploaded_file)
+    xl = pd.read_excel(uploaded_file,engine='openpyxl')
     xl.dropna()
     xl.drop(xl.filter(regex="Unnamed"),axis=1, inplace=True)
 
