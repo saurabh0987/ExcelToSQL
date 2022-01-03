@@ -8,16 +8,23 @@ st.title('Convert Excel -> SQL')
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
     # Can be used wherever a "file-like" object is accepted:
+  
     xl = pd.read_excel(uploaded_file,engine='openpyxl')
     xl.dropna()
     xl.drop(xl.filter(regex="Unnamed"),axis=1, inplace=True)
-    st.write(xl)
+
+
+    viewExcel = st.checkbox('Show Excel File')
+
+    if viewExcel:
+        st.write(xl)
+
 
     oneGO = st.checkbox('Insert all rows in one GO')
 
-    st.text(len(xl))
+    #st.text(len(xl))
 
-    st.text(''.join(str(list(xl.values.tolist()[0]))))
+    #st.text(''.join(str(list(xl.values.tolist()[0]))))
 
     st.text(str(len(list(xl.columns)))+' Columns Detected : ' + ', '.join(xl.columns))
 
