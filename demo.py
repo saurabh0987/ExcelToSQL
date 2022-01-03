@@ -1,5 +1,6 @@
 from numpy import insert
 import streamlit as st
+import openpyxl
 import pandas as pd
 
 st.title('Convert Excel -> SQL')
