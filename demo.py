@@ -50,7 +50,7 @@ if uploaded_file is not None:
             op4 += '(' + ''.join(str(list(xl.values.tolist()[i])))[1:-1] + '),\n'
 
         output = st.text_area('Insert all rows in one GO : '
-            ,op3+op4+';'
+            ,op3+op4[:-2]+');'
             ,height=len(xl.columns) + 2)
 
 
