@@ -1,8 +1,12 @@
 from numpy import insert
 import streamlit as st
 import pandas as pd
+import base64
+import time
 
 st.title('Convert CSV -> SQL')
+
+
 
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
@@ -12,12 +16,12 @@ if uploaded_file is not None:
         xl = pd.read_excel(uploaded_file,engine = 'openpyxl')
         st.write('Excel File uploaded successfully')
     except:
+        uploaded_file.seek(0)
         xl = pd.read_csv(uploaded_file)
         st.write('CSV File uploaded successfully')
-        
+
     xl.dropna()
     xl.drop(xl.filter(regex="Unnamed"),axis=1, inplace=True)
-
 
     viewCSV = st.checkbox('Show CSV File')
 
@@ -33,7 +37,7 @@ if uploaded_file is not None:
 
     st.text(str(len(list(xl.columns)))+' Columns Detected : ' + ', '.join(xl.columns))
 
-    tableName = st.text_input('Enter Table Name ', 'TempTableCase#########')
+    tableName = st.text_input('Enter Table Name ', 'TempTableCase#')
     #st.write('Table Name :- ', tableName)
 
     op1 = '/*  CREATE TABLE  */\nCREATE TABLE ' + tableName + '('
