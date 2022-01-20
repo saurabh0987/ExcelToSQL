@@ -44,7 +44,7 @@ if uploaded_file is not None:
 
     op2='\n'
     for col in xl.columns:
-        op2 += col + ' INT,\n' if str(xl[col][0]).isdigit() else col + ' VARCHAR(' + str(len(max(xl[col]))) + '),' + '\n'
+        op2 += col + ' VARCHAR(' + str(len(max(xl[col]))) + '),' + '\n'
 
 
     output = st.text_area('Create Table Code : '
