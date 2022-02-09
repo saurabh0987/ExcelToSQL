@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import base64
 import time
+import datetime
 
 st.title('Convert CSV -> SQL')
 
@@ -43,8 +44,13 @@ if uploaded_file is not None:
     op1 = '/*  CREATE TABLE  */\nCREATE TABLE ' + tableName + '('
 
     op2='\n'
+    datatype={'int':'INTEGER','str':'VARCHAR'}
+    
     for col in xl.columns:
-        op2 += col + ' VARCHAR(' + str(len(str(max(xl[col])))) + '),' + '\n'
+        column_field_lengths = [len(str(x)) for x in xl[col]]
+        varchar_length = max(column_field_lengths)
+        
+        op2 += col + ' VARCHAR(' + str(varchar_length) + '),' + '\n'
 
 
     output = st.text_area('Create Table Code : '
