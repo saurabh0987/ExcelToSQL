@@ -5,9 +5,55 @@ import base64
 import time
 import datetime
 
+
+def create_table(tableName,xl):
+        op1 = '/*  CREATE TABLE  */\nCREATE TABLE ' + tableName + '('
+    
+        op2='\n'
+        datatype={'int':'INTEGER','str':'VARCHAR'}
+        
+        for col in xl.columns:
+            column_field_lengths = [len(str(x)) for x in xl[col]]
+            varchar_length = max(column_field_lengths)
+            
+            op2 += col + ' VARCHAR(' + str(varchar_length) + '),' + '\n'
+    
+    
+        output = st.text_area('Create Table Code : '
+            ,op1+op2[:-2] + '\n);'
+            ,height=len(xl.columns) + 2 )
+
+
+def insert_row(tableName,oneGO,xl):
+    if oneGO:
+        op3 = '/*  INSERT ALL ROWS  */\nINSERT INTO ' + tableName + '\nVALUES\n'
+
+        op4 = ''
+        for i in range(len(xl)):
+            op4 += '(' + ''.join(str(list(xl.values.tolist()[i])))[1:-1] + '),\n'
+
+        output = st.text_area('Insert all rows in one GO : '
+            ,op3+op4[:-3]+');'
+            ,height=len(xl.columns) + 2)
+
+ 
+    else:
+        ins = ''
+        for i in range(len(xl)):
+            ins += '/*  INSERT QUERY ' + str(i+1) + '  */\n' \
+                + 'INSERT INTO ' + tableName + ' (' + ', '.join(xl.columns) \
+                + ') \nVALUES(' + '\n' \
+                + ''.join(str(list(xl.values.tolist()[i])))[1:-1] + '\n);\n'
+
+
+
+        output2 = st.text_area('Insert Data Code : '
+            ,ins
+            ,height=len(xl.columns) + 2)
+
+
+
 st.title('Convert CSV -> SQL')
-
-
 
 uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
@@ -40,46 +86,6 @@ if uploaded_file is not None:
 
     tableName = st.text_input('Enter Table Name ', 'TempTableCase#')
     #st.write('Table Name :- ', tableName)
-
-    op1 = '/*  CREATE TABLE  */\nCREATE TABLE ' + tableName + '('
-
-    op2='\n'
-    datatype={'int':'INTEGER','str':'VARCHAR'}
     
-    for col in xl.columns:
-        column_field_lengths = [len(str(x)) for x in xl[col]]
-        varchar_length = max(column_field_lengths)
-        
-        op2 += col + ' VARCHAR(' + str(varchar_length) + '),' + '\n'
-
-
-    output = st.text_area('Create Table Code : '
-        ,op1+op2[:-2] + '\n);'
-        ,height=len(xl.columns) + 2 )
-    
-
-    if oneGO:
-        op3 = '/*  INSERT ALL ROWS  */\nINSERT INTO ' + tableName + '\nVALUES\n'
-
-        op4 = ''
-        for i in range(len(xl)):
-            op4 += '(' + ''.join(str(list(xl.values.tolist()[i])))[1:-1] + '),\n'
-
-        output = st.text_area('Insert all rows in one GO : '
-            ,op3+op4[:-3]+');'
-            ,height=len(xl.columns) + 2)
-
-
-    else:
-        ins = ''
-        for i in range(len(xl)):
-            ins += '/*  INSERT QUERY ' + str(i+1) + '  */\n' \
-                + 'INSERT INTO ' + tableName + ' (' + ', '.join(xl.columns) \
-                + ') \nVALUES(' + '\n' \
-                + ''.join(str(list(xl.values.tolist()[i])))[1:-1] + '\n);\n'
-
-
-
-        output2 = st.text_area('Insert Data Code : '
-            ,ins
-            ,height=len(xl.columns) + 2)
+    create_table(tableName,xl)
+    insert_row(tableName,oneGO,xl)
